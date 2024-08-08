@@ -9,5 +9,9 @@
   "plugins": ["prettier"],
   "parserOptions": {
     "project": "./tsconfig.json"
-  }
+  },
+  "react/jsx-curly-brace-presence": [
+    "warning",
+    { "props": "never", "children": "never" }
+  ]
 }

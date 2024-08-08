@@ -27,8 +27,8 @@ export default function CollapsibleCard({
       </button>
       <div
         className={clsx(
-          'duration-300 transition-all overflow-hidden w-full px-4',
-          isOpen ? 'h-fit py-4' : 'h-0'
+          'duration-500 transition-all overflow-hidden w-full px-20 ease-in-out',
+          isOpen ? 'h-fit pb-4' : 'h-0'
         )}
       >
         {collapsibleContent}
