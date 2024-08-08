@@ -1,10 +1,9 @@
 import React from 'react';
-import './App.css';
 import Input from "./components/input/Input";
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-gray-600 h-fit min-h-v">
       <Input placeholder={'Test'}/>
     </div>
   );
