@@ -1,15 +1,17 @@
+import React from 'react';
+
 interface InputProps {
-  test: string
+  placeholder: string
 }
 
-export default function Input({ test }: InputProps): React.JSX.Element {
+export default function Input({ placeholder }: InputProps): React.JSX.Element {
   return (
     <div className="relative">
       <input
         type="text"
         id="floating_outlined"
         className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
+        placeholder={placeholder}
       />
       <label
         htmlFor="floating_outlined"
