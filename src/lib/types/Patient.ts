@@ -7,4 +7,4 @@ export interface Patient {
   avatar?: string
 }
 
-export type PatientFormErrorType = 'long' | 'invalid' | 'short'
+export type PatientFormErrorType = 'long' | 'short'

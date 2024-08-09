@@ -25,14 +25,12 @@ export function formatPatientsInformation({
 
 export const getPatientFormError = (
   type: PatientFormErrorType,
-  charCount?: number | string
+  charCount: number | string
 ) => {
   switch (type) {
     case 'long':
       return `Too Long. Must be shorter than ${charCount} chars`
     case 'short':
       return `Too Short. Must be longer than ${charCount} chars`
-    case 'invalid':
-      return `Enter a valid value.`
   }
 }

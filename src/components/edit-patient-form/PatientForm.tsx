@@ -9,6 +9,8 @@ import Button from '../button/Button'
 import { getPatientFormError } from '../../lib/utils/patientsHelper'
 import { formatDate } from '../../lib/utils/dateHelper'
 
+const LETTERS_REGEX = new RegExp(/^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/)
+
 interface PatientFormProps {
   onSubmit: (patient: Patient) => void
   patient?: Patient
@@ -22,7 +24,8 @@ export default function PatientForm({
     name: z
       .string()
       .max(40, { message: getPatientFormError('long', 40) })
-      .min(4, { message: getPatientFormError('short', 4) }),
+      .min(4, { message: getPatientFormError('short', 4) })
+      .regex(LETTERS_REGEX, { message: 'Name should contain only alphabets' }),
     description: z
       .string()
       .max(900, { message: getPatientFormError('long', 900) })
