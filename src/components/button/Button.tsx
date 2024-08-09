@@ -5,7 +5,7 @@ export type ButtonVariants = 'default' | 'unstyled'
 
 const VariantStyles: Record<ButtonVariants, string> = {
   default:
-    'bg-black h-10 rounded-full px-4 text-sm uppercase text-white hover:border-gray-200 hover:bg-black/85 disabled:bg-gray-300 disabled:text-gray-400',
+    'bg-black h-10 rounded-full px-4 text-sm uppercase text-white hover:border-gray-200 hover:bg-black/85 disabled:bg-gray-300 disabled:text-gray-400 font-bold',
   unstyled: '',
 }
 
@@ -38,12 +38,18 @@ export default function Button({
 }: ButtonProps): React.JSX.Element {
   return (
     <button
-      className={clsx(className, VariantStyles[variant], SizeStyles[size])}
+      className={clsx(
+        'flex flex-row items-center justify-center gap-1',
+        className,
+        VariantStyles[variant],
+        SizeStyles[size]
+      )}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {text}
-      <div className="flex flex-row">{icon}</div>
+      {icon}
     </button>
   )
 }

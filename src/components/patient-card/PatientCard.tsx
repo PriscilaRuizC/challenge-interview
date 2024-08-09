@@ -31,7 +31,7 @@ export default function PatientCard({
     <CollapsibleCard
       content={
         <div className="gap-4 flex flex-row items-center">
-          <div className="rounded-full min-h-12 min-w-12 h-12 w-12 overflow-hidden object-contain">
+          <div className="rounded-full min-h-12 min-w-12 h-12 w-12 overflow-hidden object-contain border-gray-300 border">
             <img src={patient.avatar ?? User} alt="avatar" />
           </div>
           <p className="text-lg font-bold leading-none">{patient.name}</p>

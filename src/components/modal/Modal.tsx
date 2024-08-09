@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import clsx from 'clsx'
 import Button from '../button/Button'
+import Close from '../../icons/Close'
 
 interface ModalProps {
   isOpen: boolean
@@ -35,13 +36,13 @@ export default function Modal({
       )}
     >
       <div
-        className="absolute top-0 left-0 h-screen w-screen bg-transparent z-10"
+        className="fixed top-0 left-0 h-screen w-screen bg-transparent z-10"
         onClick={handleClose}
       />
-      <div className="absolute top-0 left-0 h-screen w-screen bg-black/20 flex items-center justify-center">
-        <div className="relative p-8 overflow-y-auto overflow-x-hidden h-full w-full sm:max-h-[600px] sm:max-w-[600px] sm:h-fit sm:w-fit bg-white rounded-3xl z-20 flex items-center justify-center">
+      <div className="fixed top-0 left-0 h-screen w-screen bg-black/20 flex items-center justify-center z-20">
+        <div className="relative py-12 px-16 overflow-y-auto overflow-x-hidden w-full sm:max-h-[600px] sm:max-w-[600px] sm:h-fit sm:w-fit bg-white rounded-3xl flex items-center justify-center">
           <div className="absolute top-0 right-0 p-2 z-20">
-            <Button text="close" onClick={handleClose} />
+            <Button icon={<Close fill="#FFFFFF" />} onClick={handleClose} />
           </div>
           {children}
         </div>

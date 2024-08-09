@@ -1,58 +1,63 @@
+import uuid from 'react-uuid'
 import React from 'react'
 import { Patient } from '../../lib/types/Patient'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { EDIT_PATIENT_FORM_ERRORS } from '../../lib/fixtures/editPatientFormFixtures'
 import Input from '../input/Input'
 import Button from '../button/Button'
+import { getPatientFormError } from '../../lib/utils/patientsHelper'
+import { formatDate } from '../../lib/utils/dateHelper'
 
-interface EditPatientFormProps {
+interface PatientFormProps {
   onSubmit: (patient: Patient) => void
-  patient: Patient
+  patient?: Patient
 }
 
-export default function EditPatientForm({
+export default function PatientForm({
   onSubmit,
   patient,
-}: EditPatientFormProps): React.JSX.Element | null {
+}: PatientFormProps): React.JSX.Element | null {
   const formSchema = z.object({
-    name: z.string().max(40, { message: EDIT_PATIENT_FORM_ERRORS.length }),
+    name: z
+      .string()
+      .max(40, { message: getPatientFormError('long', 40) })
+      .min(4, { message: getPatientFormError('short', 4) }),
     description: z
       .string()
-      .max(900, { message: EDIT_PATIENT_FORM_ERRORS.length }),
+      .max(900, { message: getPatientFormError('long', 900) })
+      .optional(),
     website: z
       .string()
-      .max(40, { message: EDIT_PATIENT_FORM_ERRORS.length })
+      .max(40, { message: getPatientFormError('long', 40) })
       .optional(),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    mode: 'onTouched',
-    reValidateMode: 'onChange',
+    mode: 'onChange',
     defaultValues: {
-      name: patient.name,
-      description: patient.description,
-      website: patient.website,
+      name: patient?.name,
+      description: patient?.description,
+      website: patient?.website,
     },
   })
 
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
     onSubmit({
-      ...data,
-      id: patient.id,
-      website: data.website ?? patient.website,
-      avatar: patient.avatar,
+      name: data.name,
+      id: patient?.id ?? uuid(),
+      website: data.website ?? patient?.website,
+      avatar: patient?.avatar,
+      createdAt: patient?.createdAt ?? formatDate({ date: new Date() }),
+      description: data.description ?? patient?.description,
     })
   }
-
-  const isFormDisabled = !form.formState.isValid
 
   return (
     <FormProvider {...form}>
       <form
-        className="gap-3 grid grid-cols-1 w-[400px]"
+        className="gap-3 grid grid-cols-1 w-full sm:w-[400px]"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <Controller
@@ -88,7 +93,7 @@ export default function EditPatientForm({
             />
           )}
         />
-        <Button text="Submit" type="submit" disabled={isFormDisabled} />
+        <Button text="Submit" type="submit" />
       </form>
     </FormProvider>
   )

@@ -4,7 +4,9 @@ import PatientCard from '../patient-card/PatientCard'
 import Skeleton from './skeleton/Skeleton'
 import { getPatientsInformation } from '../../client/patientClient'
 import { formatPatientsInformation } from '../../lib/utils/patientsHelper'
-import EditPatientModal from '../edit-patient-modal/EditPatientModal'
+import PatientModal from '../edit-patient-modal/PatientModal'
+import Button from '../button/Button'
+import Plus from '../../icons/Plus'
 
 export default function PatientsList(): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false)
@@ -25,11 +27,15 @@ export default function PatientsList(): React.JSX.Element {
     setIsLoading(false)
   }, [])
 
+  const cleanOpenedPatient = () => {
+    setOpenedPatient(undefined)
+    setIndex(undefined)
+  }
+
   const handlePatientToggle = (newPatient: Patient, newIndex: number) => {
     const isSameID = newPatient.id === openedPatient?.id
     if (isSameID) {
-      setOpenedPatient(undefined)
-      setIndex(undefined)
+      cleanOpenedPatient()
     }
 
     if (!isSameID) {
@@ -39,11 +45,23 @@ export default function PatientsList(): React.JSX.Element {
   }
 
   const handleSubmit = (newPatient: Patient) => {
-    if (openedPatient && index && patients) patients[index] = newPatient
+    if (openedPatient && index !== undefined && patients) {
+      patients[index] = newPatient
+      setOpenedPatient(newPatient)
+    }
+
+    if (!openedPatient) {
+      patients?.unshift(newPatient)
+    }
   }
 
-  const handleEdit = () => {
+  const handleShowModal = () => {
     setShowEditPatientModal(true)
+  }
+
+  const handleCreatePatient = () => {
+    cleanOpenedPatient()
+    handleShowModal()
   }
 
   return (
@@ -52,20 +70,28 @@ export default function PatientsList(): React.JSX.Element {
         <Skeleton />
       ) : patients ? (
         <div className="grid grid-cols-1 gap-4">
-          <h3 className="font-semibold text-3xl">Patients</h3>
+          <div className="flex flex-row justify-between">
+            <h3 className="font-semibold text-3xl">Patients</h3>
+            <Button
+              text="Add"
+              icon={<Plus fill="#FFFFFF" />}
+              onClick={handleCreatePatient}
+            />
+          </div>
+
           {patients.map((patient, index) => (
             <li key={patient.id}>
               <PatientCard
                 patient={patient}
                 isOpen={openedPatient?.id === patient.id}
                 toggleOpen={(patient) => handlePatientToggle(patient, index)}
-                onEdit={handleEdit}
+                onEdit={handleShowModal}
               />
             </li>
           ))}
         </div>
       ) : null}
-      <EditPatientModal
+      <PatientModal
         onSubmit={handleSubmit}
         patient={openedPatient}
         isOpen={showEditPatientModal}

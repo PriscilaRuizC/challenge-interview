@@ -1,27 +1,25 @@
 import React from 'react'
-import EditPatientForm from '../edit-patient-form/EditPatientForm'
+import PatientForm from '../edit-patient-form/PatientForm'
 import { Patient } from '../../lib/types/Patient'
 import Modal from '../modal/Modal'
 
-interface EditPatientModalProps {
+interface PatientModalProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   onSubmit: (patient: Patient) => void
   patient?: Patient
 }
 
-export default function EditPatientModal({
+export default function PatientModal({
   isOpen = false,
   setIsOpen,
   onSubmit,
   patient,
-}: EditPatientModalProps): React.JSX.Element | null {
+}: PatientModalProps): React.JSX.Element | null {
   const handleSubmit = (newPatient: Patient) => {
     setIsOpen(false)
     onSubmit(newPatient)
   }
-
-  if (!patient) return null
 
   return (
     <Modal
@@ -29,7 +27,7 @@ export default function EditPatientModal({
       setIsOpen={setIsOpen}
       children={
         <div className="w-full">
-          <EditPatientForm patient={patient} onSubmit={handleSubmit} />
+          <PatientForm patient={patient} onSubmit={handleSubmit} />
         </div>
       }
     />
