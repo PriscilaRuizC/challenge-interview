@@ -40,9 +40,9 @@ export default function PatientForm({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: patient?.name,
-      description: patient?.description,
-      website: patient?.website,
+      name: patient?.name ?? '',
+      description: patient?.description ?? '',
+      website: patient?.website ?? '',
     },
   })
 
