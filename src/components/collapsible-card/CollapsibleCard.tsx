@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react'
 import clsx from 'clsx'
-import Minus from '../../icons/Minus'
-import Plus from '../../icons/Plus'
+import ArrowDown from '../../icons/ArrowDown'
 
 interface CollapsibleCardProps {
   content: ReactNode
@@ -19,16 +18,23 @@ export default function CollapsibleCard({
   return (
     <div className="w-full bg-white rounded-3xl">
       <button
-        className="w-full p-4 flex flex-row justify-between align-middle"
+        className="w-full p-4 flex flex-row justify-between items-center"
         onClick={toggleOpen}
       >
         <div className="h-full flex items-center">{content}</div>
-        <div>{isOpen ? <Minus /> : <Plus />}</div>
+        <div
+          className={clsx(
+            'duration-300 transition-all',
+            isOpen ? 'rotate-180' : ''
+          )}
+        >
+          <ArrowDown />
+        </div>
       </button>
       <div
         className={clsx(
-          'duration-500 transition-all overflow-hidden w-full px-20 ease-in-out',
-          isOpen ? 'h-fit pb-4' : 'h-0'
+          'duration-500 transition-all overflow-hidden w-full sm:px-20 px-4 ease',
+          isOpen ? 'max-h-[700px] h-fit pb-4' : 'max-h-0'
         )}
       >
         {collapsibleContent}

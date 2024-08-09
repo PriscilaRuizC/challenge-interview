@@ -1,8 +1,10 @@
 export interface Patient {
-  createdAt: string
+  createdAt?: string
   name: string
   description: string
-  website: string
+  website?: string
   id: string
   avatar?: string
 }
+
+export type EditPatientFormErrorType = 'length' | 'invalid'
